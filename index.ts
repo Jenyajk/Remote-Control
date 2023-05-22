@@ -6,14 +6,13 @@ import {handleCommand} from "./src/http_server/command.ts";
 
 
 const HTTP_PORT = 8181;
-
+const WS_PORT = 8080
 
 console.log(`Start static HTTP server on port http://localhost:${HTTP_PORT}!`);
 httpServer.listen(HTTP_PORT);
-console.log(`Start WebSocket server on port ws://localhost:${HTTP_PORT}`);
 
-export function createWebSocketServer(port: number) {
 
+function createWebSocketServer(port: number) {
     const server = createServer();
     const wss = new WebSocketServer({ server });
 
@@ -28,13 +27,13 @@ export function createWebSocketServer(port: number) {
         });
 
         wsStream.on("close", () => {
-            console.log("Connecting closed");
+            console.log("Connection closed");
         });
     });
 
     server.listen(port, () => {
-        console.log(`Start WebSocket server on port http://localhost:${port}`);
+        console.log(`WebSocket server started on port http://localhost:${port}`);
     });
-
 }
+createWebSocketServer(WS_PORT);
 

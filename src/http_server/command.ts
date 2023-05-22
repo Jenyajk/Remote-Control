@@ -1,4 +1,4 @@
-
+import {printScreen} from "./screen.ts";
 
 
 interface ICommands {
@@ -14,14 +14,17 @@ export interface IRes {
 
 export async function handleCommand(command: string): Promise<IRes | void> {
     const commandHandlers: ICommands = {
-        move: async (width:number, length:number) => {
+        move: async (width: number, length: number) => {
             console.log(`Moving mouse to coordinates: ${width}, ${length}`);
             return { data: "Mouse moved successfully" };
         },
         click: async () => {
-
             console.log("Performing mouse click");
             return { data: "Mouse click performed" };
+        },
+        prnt_scrn: async () => {
+            const imgData = await printScreen();
+            return { data: imgData, type: "image/png" };
         },
     };
 
@@ -33,10 +36,8 @@ export async function handleCommand(command: string): Promise<IRes | void> {
             return await commandHandler(...(args.map(Number) as [number, number]));
         } catch (error) {
             console.error("Error executing command:", error);
-
         }
     } else {
         console.log("Unknown command:", cmd);
-
     }
 }
