@@ -1,4 +1,4 @@
-import {printScreen} from "./screen.ts";
+import { printRectangle, printScreen, printSquare} from "./screen.ts";
 
 
 interface ICommands {
@@ -13,6 +13,8 @@ export interface IRes {
 }
 
 export async function handleCommand(command: string): Promise<IRes | void> {
+    const [cmd, width, length] = command.split(" ");
+
     const commandHandlers: ICommands = {
         move: async (width: number, length: number) => {
             console.log(`Moving mouse to coordinates: ${width}, ${length}`);
@@ -26,14 +28,25 @@ export async function handleCommand(command: string): Promise<IRes | void> {
             const imgData = await printScreen();
             return { data: imgData, type: "image/png" };
         },
+        draw_square: async () => {
+            const imgData = await printSquare('draw_square',width);
+            return { data: imgData, type: "image/png" };
+        },
+        //draw_circle: async () => {
+         //   const imgData = await printCircle('draw_square',width);
+         //   return { data: imgData, type: "image/png" };
+       // },
+        draw_rectangle: async () => {
+            const imgData = await printRectangle('draw_square', width, length);
+            return { data: imgData, type: "image/png" };
+        },
     };
 
-    const [cmd, ...args] = command.split(" ");
-    const commandHandler = commandHandlers[cmd];
 
+    const commandHandler = commandHandlers[cmd];
     if (commandHandler) {
         try {
-            return await commandHandler(...(args.map(Number) as [number, number]));
+            return await commandHandler(Number(cmd), Number(width));
         } catch (error) {
             console.error("Error executing command:", error);
         }
