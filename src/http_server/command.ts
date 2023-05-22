@@ -1,4 +1,5 @@
 import { printRectangle, printScreen, printSquare} from "./screen.ts";
+import {mouseDown, mouseLeft, mousePosition, mouseRight, mouseUp} from "./mouse.ts";
 
 
 interface ICommands {
@@ -32,13 +33,29 @@ export async function handleCommand(command: string): Promise<IRes | void> {
             const imgData = await printSquare('draw_square',width);
             return { data: imgData, type: "image/png" };
         },
-        //draw_circle: async () => {
-         //   const imgData = await printCircle('draw_square',width);
-         //   return { data: imgData, type: "image/png" };
-       // },
         draw_rectangle: async () => {
             const imgData = await printRectangle('draw_square', width, length);
             return { data: imgData, type: "image/png" };
+        },
+        mouse_up: async () => {
+            const imgData = await mouseUp('mouse_up',width);
+            return { data: imgData};
+        },
+        mouse_down: async () => {
+            const imgData = await mouseDown('mouse_down',width);
+            return { data: imgData };
+        },
+        mouse_left: async () => {
+            const imgData = await mouseLeft('mouse_left',width);
+            return { data: imgData };
+        },
+        mouse_right: async () => {
+            const imgData = await mouseRight('mouse_right',width);
+            return { data: imgData };
+        },
+        mouse_position: async () => {
+            const position = await mousePosition('mouse_position');
+            return { data: position }
         },
     };
 

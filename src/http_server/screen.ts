@@ -27,19 +27,6 @@ export async function printSquare(command: string, width: string): Promise<strin
     return command;
 }
 
-// export async function printCircle(command: string, radius: string): Promise<string>{
-//     const {x,y} = await mouse.getPosition()
-//     await mouse.releaseButton(Button.LEFT)
-//     await mouse.pressButton(Button.LEFT)
-//     for (let i=0; i<=360; i++){
-//         const radians = (Math.PI/180) * i
-//         const cx = radius * Math.cos(radians) + x - radius
-//         const cy = radius * Math.sin(radians) + y
-//         await mouse.move(straightTo(new Point(cx, cy)))
-//     }
-//     await mouse.releaseButton(Button.LEFT)
-//     return command
-// }
 export async function printRectangle(command: string, x: string, y: string){
     await mouse.releaseButton(Button.LEFT)
     await mouse.pressButton(Button.LEFT)
